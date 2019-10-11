@@ -79,7 +79,27 @@ module.exports = (env, argv) => {
                 ]
               }
             }
-          ] // 注意排列顺序，执行顺序与排列顺序相反
+          ], // 注意排列顺序，执行顺序与排列顺序相反
+          include: [path.resolve(__dirname, 'src')],
+          exclude: /node_modules/,
+        },
+        {
+          test: /\.styl$/,
+          use: [
+            isDEV ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+            { 
+              loader: 'postcss-loader',
+              options: {
+                plugins: loader => [
+                  require('autoprefixer')(), //CSS浏览器兼容
+                ]
+              }
+            },
+            'stylus-loader',
+          ],
+          include: [path.resolve(__dirname, 'src')],
+          exclude: /node_modules/,
         }, 
         {
           test: /\.(jpg|jpeg|png|gif|svg)$/,

@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
           },
         },
       },
-      minimizer: [
+      minimizer: isDEV ? [] : [
         new UglifyJsPlugin({
           uglifyOptions: {
             compress: {

@@ -1,6 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin') // html模版
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin') // 混淆代码
+const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 压缩 css 并合并成 文件
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin') // 压缩css & 去除注释  
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') // 删除 旧的文件 
@@ -34,17 +34,7 @@ module.exports = (env, argv) => {
         },
       },
       minimizer: isDEV ? [] : [
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            compress: {
-              drop_console: true,
-            },
-            ecma: 5,
-          },
-          cache: true,
-          parallel: true,
-          sourceMap: true,
-        }),
+        new TerserPlugin(),
         new OptimizeCSSAssetsPlugin({
           assetNameRegExp: /\.css$/g,
           cssProcessorOptions: {
